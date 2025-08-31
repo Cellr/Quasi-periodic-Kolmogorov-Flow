@@ -39,10 +39,10 @@ cos_z['g'] = np.cos(z)
 sin_z['g'] = np.sin(z)
 
 #ABC设定
-A=1
-B=1
-C=1
-omega_q=1
+A=0
+B=0.5
+C=0.3
+omega_q=np.sqrt(2)
 
 # ----------------------------------
 
@@ -82,7 +82,7 @@ solver.stop_sim_time = stop_sim_time
 # ----------------------------------
 
 #RESTART      = os.environ.get("RESTART", "0") == "1"
-RESTART = True
+RESTART = False
 RESTART_PATH = "/ocean/projects/phy240052p/zsong7/Rayleigh/quasiN/sqrt3/checkpoints/checkpoints_s1.h5"   #这里不是自动的，重启时要手动指定路径
 
 os.makedirs("checkpoints", exist_ok=True)
@@ -124,22 +124,22 @@ for i, f in enumerate(solver.state):
 
 snapshots = solver.evaluator.add_file_handler('snapshots', sim_dt=0.1, max_writes=None)
 snapshots.add_task(psi_prime,                         name='psi_prime',        layout='g')
-snapshots.add_task(cos_z,                             name='cos_z',            layout='g')
+#snapshots.add_task(cos_z,                             name='cos_z',            layout='g')
 snapshots.add_task(d3.Laplacian(psi_prime),           name='vorticity_prime',  layout='g')
 snapshots.add_task(dx(psi_prime),                     name='w',                layout='g')
 snapshots.add_task(-dz(psi_prime),                    name='u',                layout='g')
 snapshots.add_task(dpsi_bar_dz(problem.time),         name='u_bar',            layout='g')
-snapshots.add_task(lap_psi_bar(problem.time),         name='lap_psi_bar',      layout='g')
-snapshots.add_task(dlap_psi_bar_dz(problem.time),     name='dlap_psi_bar_dz',  layout='g')
+#snapshots.add_task(lap_psi_bar(problem.time),         name='lap_psi_bar',      layout='g')
+#snapshots.add_task(dlap_psi_bar_dz(problem.time),     name='dlap_psi_bar_dz',  layout='g')
 snapshots.add_task(beta - dlap_psi_bar_dz(problem.time), name='Q_rayleigh_kuo', layout='g')
 
 snapshots_1D = solver.evaluator.add_file_handler('snapshots_1D', sim_dt=0.01, max_writes=None)
-snapshots_1D.add_task(dx(psi_prime)(x=0), name='w_yz')
-snapshots_1D.add_task(dx(psi_prime)(z=0), name='w_xy')
-snapshots_1D.add_task(-dz(psi_prime)(x=0), name='u_yz')
-snapshots_1D.add_task(-dz(psi_prime)(z=0), name='u_xy')
-snapshots_1D.add_task(psi_prime(x=0), name='psi_yz')
-snapshots_1D.add_task(psi_prime(z=0), name='psi_xy')
+snapshots_1D.add_task(dx(psi_prime)(x=0), name='w_x0')
+snapshots_1D.add_task(dx(psi_prime)(z=0), name='w_z0')
+snapshots_1D.add_task(-dz(psi_prime)(x=0), name='u_x0')
+snapshots_1D.add_task(-dz(psi_prime)(z=0), name='u_z0')
+snapshots_1D.add_task(psi_prime(x=0), name='psi_x0')
+snapshots_1D.add_task(psi_prime(z=0), name='psi_z0')
 
 # ----------------------------------
 
