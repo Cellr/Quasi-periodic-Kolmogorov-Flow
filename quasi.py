@@ -124,14 +124,15 @@ for i, f in enumerate(solver.state):
 
 snapshots = solver.evaluator.add_file_handler('snapshots', sim_dt=0.1, max_writes=None)
 snapshots.add_task(psi_prime,                         name='psi_prime',        layout='g')
+snapshots.add_task(psi_prime,                         name='psi_prime_coeff',  layout='c') #Add Fourier coefficients
 #snapshots.add_task(cos_z,                             name='cos_z',            layout='g')
 snapshots.add_task(d3.Laplacian(psi_prime),           name='vorticity_prime',  layout='g')
 snapshots.add_task(dx(psi_prime),                     name='w',                layout='g')
 snapshots.add_task(-dz(psi_prime),                    name='u',                layout='g')
-snapshots.add_task(dpsi_bar_dz(problem.time),         name='u_bar',            layout='g')
+#snapshots.add_task(dpsi_bar_dz(problem.time),         name='u_bar',            layout='g')
 #snapshots.add_task(lap_psi_bar(problem.time),         name='lap_psi_bar',      layout='g')
 #snapshots.add_task(dlap_psi_bar_dz(problem.time),     name='dlap_psi_bar_dz',  layout='g')
-snapshots.add_task(beta - dlap_psi_bar_dz(problem.time), name='Q_rayleigh_kuo', layout='g')
+#snapshots.add_task(beta - dlap_psi_bar_dz(problem.time), name='Q_rayleigh_kuo', layout='g')
 
 snapshots_1D = solver.evaluator.add_file_handler('snapshots_1D', sim_dt=0.01, max_writes=None)
 snapshots_1D.add_task(dx(psi_prime)(x=0), name='w_x0')
@@ -140,6 +141,7 @@ snapshots_1D.add_task(-dz(psi_prime)(x=0), name='u_x0')
 snapshots_1D.add_task(-dz(psi_prime)(z=0), name='u_z0')
 snapshots_1D.add_task(psi_prime(x=0), name='psi_x0')
 snapshots_1D.add_task(psi_prime(z=0), name='psi_z0')
+
 
 # ----------------------------------
 
