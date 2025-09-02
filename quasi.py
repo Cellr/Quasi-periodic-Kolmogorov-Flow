@@ -110,10 +110,10 @@ else:
 # ----------------------------------
 # t = 0.5 记录一次（用于验证是否能成功生成checkpoints）之后每隔5记录一次
 
-checkpoints_early = solver.evaluator.add_file_handler('checkpoints1', sim_dt=0.5, max_writes=1)
-for i, f in enumerate(solver.state):
-    name = f.name if getattr(f, "name", None) else f"state_{i}"
-    checkpoints_early.add_task(f, name=name, layout='g')
+#checkpoints_early = solver.evaluator.add_file_handler('checkpoints1', sim_dt=0.5, max_writes=1)
+#for i, f in enumerate(solver.state):
+#    name = f.name if getattr(f, "name", None) else f"state_{i}"
+#    checkpoints_early.add_task(f, name=name, layout='g')
     
 checkpoints_regular = solver.evaluator.add_file_handler('checkpoints', sim_dt=5.0, max_writes=None)
 for i, f in enumerate(solver.state):
