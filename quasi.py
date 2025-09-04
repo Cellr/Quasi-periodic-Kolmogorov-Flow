@@ -13,7 +13,7 @@ Nx, Nz = 1024, 512
 beta = 1
 nv = 0.0002
 dealias = 3/2
-stop_sim_time = 700
+stop_sim_time = 2100
 timestepper = d3.RK443
 max_timestep = 1e-2
 dtype = np.float64
@@ -42,7 +42,7 @@ sin_z['g'] = np.sin(z)
 A=0
 B=0.5
 C=0.3
-omega_q=np.sqrt(2)
+omega_q=np.sqrt(0.1)
 
 # ----------------------------------
 
@@ -82,9 +82,9 @@ solver.stop_sim_time = stop_sim_time
 # ----------------------------------
 
 #RESTART      = os.environ.get("RESTART", "0") == "1"
-RESTART = False
-RESTART_PATH = "/ocean/projects/phy240052p/zsong7/Rayleigh/quasiN/sqrt3/checkpoints/checkpoints_s1.h5"   #这里不是自动的，重启时要手动指定路径
-
+RESTART = True
+#RESTART_PATH = "/ocean/projects/phy240052p/zsong7/Rayleigh/quasiN/sqrt3/checkpoints/checkpoints_s1.h5"   #这里不是自动的，重启时要手动指定路径
+RESTART_PATH = "/scratch/changliu0520/dedalus_10549475/checkpoints/checkpoints_s1.h5"
 os.makedirs("checkpoints", exist_ok=True)
 os.makedirs("checkpoints_early", exist_ok=True)
 
@@ -122,7 +122,7 @@ for i, f in enumerate(solver.state):
 
 # ----------------------------------
 
-snapshots = solver.evaluator.add_file_handler('snapshots', sim_dt=0.1, max_writes=None)
+snapshots = solver.evaluator.add_file_handler('snapshots', sim_dt=1, max_writes=None)
 snapshots.add_task(psi_prime,                         name='psi_prime',        layout='g')
 snapshots.add_task(psi_prime,                         name='psi_prime_coeff',  layout='c') #Add Fourier coefficients
 #snapshots.add_task(cos_z,                             name='cos_z',            layout='g')
