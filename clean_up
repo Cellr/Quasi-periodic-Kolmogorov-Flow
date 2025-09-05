@@ -1,0 +1,12 @@
+rm -rf /scratch/changliu0520/dedalus_10549469/checkpoints1
+rm -rf /scratch/changliu0520/dedalus_10549470/checkpoints1
+rm -rf /scratch/changliu0520/dedalus_10549471/checkpoints1
+rm -rf /scratch/changliu0520/dedalus_10549473/checkpoints1
+rm -rf /scratch/changliu0520/dedalus_10549475/checkpoints1
+rm -rf /scratch/changliu0520/dedalus_10549477/checkpoints1
+rm -rf /scratch/changliu0520/dedalus_10549480/checkpoints1
+rm -rf /scratch/changliu0520/dedalus_10549482/checkpoints1
+rm -rf /scratch/changliu0520/dedalus_10549596/checkpoints1
+rm -rf /scratch/changliu0520/dedalus_10549597/checkpoints1
+rm -rf /scratch/changliu0520/dedalus_10549598/checkpoints1
+

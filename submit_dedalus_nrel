@@ -1,0 +1,28 @@
+#!/bin/bash
+#SBATCH --account=uconnfluent
+###SBATCH --qos=high ### high priority will charge twice... standby: does not charge AUs
+#SBATCH --nodes=1
+#SBATCH --ntasks=104
+#SBATCH --partition=medmem,long
+#SBATCH --time=5-00:00:00
+#SBATCH --mail-user=chang_liu@uconn.edu      # Destination email address (Change to YOUR email)
+#SBATCH --mail-type=ALL                       # Event(s) that triggers email notification
+#SBATCH --job-name=Dedalus
+###SBATCH --mem-per-cpu=6G
+#SBATCH --mem=60G
+#SBATCH --output=dedalus_output_%j
+export SLURM_EXPORT_ENV=ALL
+#export I_MPI_FABRICS=shm,tcp
+
+##the slurm number to restart simulation... This need full state to be stored.
+
+SUBMITDIR=$SLURM_SUBMIT_DIR
+WORKDIR=/scratch/changliu0520/dedalus_$SLURM_JOB_ID
+mkdir -p "$WORKDIR" && cp -r *.py "$WORKDIR" && cp submit_dedalus_* "$WORKDIR" && cd "$WORKDIR" || exit -1
+
+conda init
+conda activate dedalus3
+mpiexec -n $SLURM_NTASKS python3 quasi.py
+
+cd "$SUBMITDIR" && cp dedalus_output_$SLURM_JOB_ID "$WORKDIR"
+
